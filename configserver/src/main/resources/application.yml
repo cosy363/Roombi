@@ -1,0 +1,16 @@
+server:
+  port: 8888
+
+spring:
+  application:
+    name: config-service
+  cloud:
+    config:
+      server:
+        git:
+          uri: file://Users/brannynew/Documents/Roombination/Roombination/git-local-repo
+          default-label: main
+          clone-on-start: true
+
+
+
