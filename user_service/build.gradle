@@ -23,17 +23,25 @@ ext {
 }
 
 dependencies {
-	implementation 'org.springframework.cloud:spring-cloud-starter-gateway'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
 	compileOnly 'org.projectlombok:lombok'
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	runtimeOnly 'com.mysql:mysql-connector-j'
 
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation group: 'org.modelmapper', name: 'modelmapper', version: '2.3.8'
+	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation group: 'io.jsonwebtoken', name: 'jjwt', version: '0.9.1'
-	implementation 'javax.xml.bind:jaxb-api'
+//  Spring Config Server Added
+	implementation 'org.springframework.cloud:spring-cloud-starter'
+	implementation 'org.springframework.cloud:spring-cloud-starter-config'
+// Actuator added
+	implementation 'org.springframework.boot:spring-boot-starter-actuator'
 
-	//m1 mac error fix
-	implementation 'io.netty:netty-resolver-dns-native-macos:4.1.68.Final:osx-aarch_64'
 }
 
 dependencyManagement {

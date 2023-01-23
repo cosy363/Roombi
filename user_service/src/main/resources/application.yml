@@ -1,0 +1,39 @@
+server:
+  port: 0
+
+spring:
+  application:
+    name: user-service
+  datasource:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      url: jdbc:mysql://localhost:3306/furniture_DB?serverTimezone=Asia/Seoul
+      username: root
+      password: kimjin12!
+  cloud:
+    config:
+      name: userservice
+  config:
+    import: "optional:configserver:http://localhost:8888"
+
+
+eureka:
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+        defaultZone: http://localhost:8761/eureka
+
+welcome:
+  message: Roombination.
+  secondmessage: Roombi.
+
+logging:
+  level:
+    roombi.server.userservice: DEBUG
+
+#token:
+#  expiration_time: 8640000
+#  secret: user_token

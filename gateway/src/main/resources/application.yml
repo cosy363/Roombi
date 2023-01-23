@@ -50,4 +50,5 @@ spring:
             - AuthorizationHeaderFilter
 
 token:
+  expiration_time: 8640000
   secret: user_token

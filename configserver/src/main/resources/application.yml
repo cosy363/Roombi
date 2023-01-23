@@ -8,9 +8,6 @@ spring:
     config:
       server:
         git:
-          uri: file://Users/brannynew/Documents/Roombination/Roombination/git-local-repo
-          default-label: main
-          clone-on-start: true
-
+          uri: file://Users/brannynew/Desktop/local
 
 
