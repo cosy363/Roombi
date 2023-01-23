@@ -8,6 +8,8 @@ spring:
     config:
       server:
         git:
-          uri: file://Users/brannynew/Desktop/local
+          uri: https://github.com/cosy363/config-server
+          username: cosy363
+          password: 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
 
 

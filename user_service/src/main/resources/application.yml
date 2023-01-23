@@ -34,6 +34,13 @@ logging:
   level:
     roombi.server.userservice: DEBUG
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: refresh, beans, health
+
 #token:
 #  expiration_time: 8640000
 #  secret: user_token
+

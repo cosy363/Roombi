@@ -22,6 +22,10 @@ spring:
             baseMessage: Spring Cloud Gateway Global Filter
             preLogger: true
             postLogger: true
+    config:
+      name: userservice
+  config:
+    import: "optional:configserver:http://localhost:8888"
       routes:
         - id: user-service
           uri: lb://USER-SERVICE
@@ -48,7 +52,20 @@ spring:
             - RemoveRequestHeader=Cookie
             - RewritePath=/user-service/(?<segment>.*), /$\{segment}
             - AuthorizationHeaderFilter
+        - id: user-service
+          uri: lb://USER-SERVICE
+          predicates:
+            - Path=/user-service/actuator/**
+            - Method=GET, POST
+          filters:
+            - RemoveRequestHeader=Cookie
+            - RewritePath=/user-service/(?<segment>.*), /$\{segment}
+#token:
+#  expiration_time: 8640000
+#  secret: user_token
 
-token:
-  expiration_time: 8640000
-  secret: user_token
+management:
+  endpoints:
+    web:
+      exposure:
+        include: refresh, beans, health, httptrace
