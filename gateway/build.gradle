@@ -38,8 +38,10 @@ dependencies {
 	//  Spring Config Server Added
 	implementation 'org.springframework.cloud:spring-cloud-starter'
 	implementation 'org.springframework.cloud:spring-cloud-starter-config'
-// Actuator added
+// Actuator and Rabbitmq added
 	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+	implementation 'org.springframework.boot:spring-boot-starter-amqp'
+
 }
 
 dependencyManagement {

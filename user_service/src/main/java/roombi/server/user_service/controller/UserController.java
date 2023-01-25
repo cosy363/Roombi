@@ -38,7 +38,6 @@ public class UserController {
                 + ", Server Port = " + environment.getProperty("server.port")
                 + ", Token = " + environment.getProperty("token.secret")
                 + ", Token Exp. at = " + environment.getProperty("token.expiration_time"));
-
     }
 
 

@@ -4,6 +4,12 @@ server:
 spring:
   application:
     name: config-service
+#  rabbitmq:
+#    host: 127.0.0.1
+#    port: 5672
+#    username: guest
+#    password: guest
+
   cloud:
     config:
       server:
@@ -12,4 +18,8 @@ spring:
           username: cosy363
           password: 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
 
-
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,busrefresh

@@ -14,7 +14,13 @@ eureka:
 spring:
   application:
     name: gateway
+  config:
+    import: "optional:configserver:http://localhost:8888"
   cloud:
+    name: gateway
+    config:
+      import-check:
+        enabled: false
     gateway:
       default-filters:
         - name: GlobalFilter
@@ -22,10 +28,6 @@ spring:
             baseMessage: Spring Cloud Gateway Global Filter
             preLogger: true
             postLogger: true
-    config:
-      name: userservice
-  config:
-    import: "optional:configserver:http://localhost:8888"
       routes:
         - id: user-service
           uri: lb://USER-SERVICE
@@ -60,12 +62,14 @@ spring:
           filters:
             - RemoveRequestHeader=Cookie
             - RewritePath=/user-service/(?<segment>.*), /$\{segment}
-#token:
-#  expiration_time: 8640000
-#  secret: user_token
 
 management:
   endpoints:
     web:
       exposure:
-        include: refresh, beans, health, httptrace
+        include: refresh, beans, health, httptrace, busrefresh
+
+#Config server property
+#token:
+#  expiration_time: 8640000
+#  secret: user_token
