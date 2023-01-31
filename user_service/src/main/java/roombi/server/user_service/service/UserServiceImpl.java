@@ -66,7 +66,11 @@ public class UserServiceImpl implements UserService {
 
         UserDto userDto = new ModelMapper().map(userEntity, UserDto.class);
 
+        //Get HeartList
         List<ResponseHeartList> heartLists = new ArrayList<>();
+        String heartlistUrl = "http://127.0.0.1:8000/heart-service/%s/heartlist";
+
+
         userDto.setHeartLists(heartLists);
 
         return userDto;

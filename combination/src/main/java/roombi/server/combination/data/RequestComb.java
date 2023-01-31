@@ -12,13 +12,16 @@ import java.util.List;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class RequestComb {
 
-    @NotNull(message = "")
-    private String userNumber;
+    @NotNull(message = "Not Null")
+    private String userId;
 
+    @NotNull(message = "Not Null")
     private List<Integer> furniturePreference;
 
+    @NotNull(message = "Not Null")
     private List<Integer> colorPreference;
 
+    @NotNull(message = "Not Null")
     private Integer budget;
 
 }

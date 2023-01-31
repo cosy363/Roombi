@@ -41,7 +41,8 @@ dependencies {
 // Actuator and Rabbitmq added
 	implementation 'org.springframework.boot:spring-boot-starter-actuator'
 	implementation 'org.springframework.boot:spring-boot-starter-amqp'
-
+	// Micrometer & Prometheus added
+	runtimeOnly 'io.micrometer:micrometer-registry-prometheus'
 }
 
 dependencyManagement {

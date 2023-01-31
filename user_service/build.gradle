@@ -36,12 +36,15 @@ dependencies {
 	implementation group: 'org.modelmapper', name: 'modelmapper', version: '2.3.8'
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation group: 'io.jsonwebtoken', name: 'jjwt', version: '0.9.1'
-//  Spring Config Server Added
+	//  Spring Config Server Added
 	implementation 'org.springframework.cloud:spring-cloud-starter'
 	implementation 'org.springframework.cloud:spring-cloud-starter-config'
-// Actuator and Rabbitmq added
+	// Actuator and Rabbitmq added
 	implementation 'org.springframework.boot:spring-boot-starter-actuator'
 	implementation 'org.springframework.boot:spring-boot-starter-amqp'
+	// Micrometer & Prometheus added
+	runtimeOnly 'io.micrometer:micrometer-registry-prometheus'
+
 
 }
 

@@ -37,19 +37,19 @@ public class CombController {
         return "Welcome to Combination Service";
     }
 
-
     @PostMapping("/generate")
     public ResponseEntity createUser(@RequestBody RequestComb requestComb) {
+
+        // DTO Matching
         ModelMapper mapper = new ModelMapper();
         mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
         CombDto combDto = mapper.map(requestComb, CombDto.class);
 
-        combService.GenerateCombi(CombDto);
+        combService.GenerateCombination(combDto);
 
         ResponseComb responseComb = mapper.map(combDto, ResponseComb.class);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(responseComb
-        );
+        return ResponseEntity.status(HttpStatus.OK).body(responseComb);
     }
 
 }

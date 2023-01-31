@@ -1,4 +1,9 @@
 package roombi.server.combination.jpa;
 
-public interface CombRepository {
+import org.springframework.data.repository.CrudRepository;
+
+public interface CombRepository extends CrudRepository<CombEntity, Long> {
+    Iterable<CombEntity> findByUserId(String userId);
+
+
 }

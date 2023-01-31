@@ -29,14 +29,14 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable();
-//        http.authorizeHttpRequests().antMatchers("/users/**").permitAll();
+        http.csrf().disable(); // csrf security setting disable
 
         http.authorizeRequests().antMatchers("/actuator/**").permitAll();
         http.authorizeRequests()
                 .antMatchers("/error/**").permitAll()
                 .antMatchers("/**")
-                .hasIpAddress("172.30.90.218") // Self ID
+                .hasIpAddress("172.30.89.39") // Self IP
+//                .permitAll()
                 .and()
                 .addFilter(getAuthenticationFilter());
 
@@ -50,7 +50,6 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
 
         return authenticationFilter;
     }
-
 
     // select pwd from users where user id is ---
     // db password(encrypted) == password(encrypted)?

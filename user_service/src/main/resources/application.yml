@@ -4,16 +4,16 @@ server:
 spring:
   application:
     name: user-service
-#  rabbitmq:
-#    host: 127.0.0.1
-#    port: 5672
-#    username: guest
-#    password: guest
-  datasource:
-      driver-class-name: com.mysql.cj.jdbc.Driver
-      url: jdbc:mysql://localhost:3306/furniture_DB?serverTimezone=Asia/Seoul
-      username: root
-      password: kimjin12!
+  rabbitmq:
+    host: 127.0.0.1
+    port: 5672
+    username: guest
+    password: guest
+#  datasource:
+#      driver-class-name: com.mysql.cj.jdbc.Driver
+#      url: jdbc:mysql://localhost:3306/furniture_DB?serverTimezone=Asia/Seoul
+#      username: root
+#      password: kimjin12!
   cloud:
     config:
       import-check:
@@ -45,12 +45,8 @@ management:
   endpoints:
     web:
       exposure:
-        include: refresh, beans, health, busrefresh
+        include: refresh, beans, health, busrefresh, info, metrics, prometheus
 
-#Config file property
-#token:
-#  expiration_time: 8640000
-#  secret: user_token
 #
 #gateway:
-#  ip: 172.30.90.218
+#  ip: 172.30.89.39

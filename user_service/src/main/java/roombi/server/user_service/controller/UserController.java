@@ -1,5 +1,6 @@
 package roombi.server.user_service.controller;
 
+import io.micrometer.core.annotation.Timed;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,7 @@ public class UserController {
     }
 
     @GetMapping("/healthcheck")
+    @Timed(value = "users.status", longTask = true)
     public String status(HttpServletRequest httpServletRequest) {
         return String.format("User Service Working" +
                 ", Local Server Port = " + environment.getProperty("local.server.port")
@@ -42,6 +44,8 @@ public class UserController {
 
 
     @GetMapping("/welcome")
+    @Timed(value = "users.welcome", longTask = true)
+
     public String welcome() {
         return "Welcome to User Service MSA";
     }
