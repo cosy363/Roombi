@@ -5,6 +5,7 @@ Spring+FASTAPI based Furniture Combination Generator
   <img src="./images/Roombi.png" style="width:300px;height:300px;>
   <br>
 
+  <p>
 - 사용자의 취향에 따라 4가지 종류의 가구를 추천해주는 RestAPI 기반의 Application입니다.
   -> 추천 알고리즘은 기존에 설정된 추천 점수표에 따라 작동하는 조합 알고리즘, 그리고 조합 알고리즘에 의해 만들어진
      조합을 평가하는 딥러닝 알고리즘이 있습니다.
@@ -15,6 +16,7 @@ Spring+FASTAPI based Furniture Combination Generator
 - 사용자의 취향 및 예산 Input에 따라 4가지 종류의 가구를 추천해주는 Application입니다. 하
 - 사용자의 취향 및 예산 Input에 따라 4가지 종류의 가구를 추천해주는 Application입니다.  
 
+  </p>
 
 ## 프로젝트 소개
 
