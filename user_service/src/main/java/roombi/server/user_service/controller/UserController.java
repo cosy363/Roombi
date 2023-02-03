@@ -12,7 +12,6 @@ import roombi.server.user_service.data.RequestUser;
 import roombi.server.user_service.data.ResponseUser;
 import roombi.server.user_service.data.Welcome;
 import roombi.server.user_service.dto.UserDto;
-import roombi.server.user_service.jpa.UserEntity;
 import roombi.server.user_service.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -76,4 +75,5 @@ public class UserController {
 
         return ResponseEntity.status(HttpStatus.OK).body(returnValue);
     }
+
 }

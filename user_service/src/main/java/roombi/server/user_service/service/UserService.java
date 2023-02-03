@@ -6,6 +6,6 @@ import roombi.server.user_service.dto.UserDto;
 public interface UserService extends UserDetailsService {
     UserDto createUser(UserDto userDto);
     UserDto getUserByUserNumber(String userNumber);
-
     UserDto getUserDetailsByUserNumber(String userId);
+
 }

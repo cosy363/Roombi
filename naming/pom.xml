@@ -10,9 +10,9 @@
 	</parent>
 	<groupId>roombi.server</groupId>
 	<artifactId>naming</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0</version>
 	<name>naming</name>
-	<description>Roombination Eureka Naming Server</description>
+	<description>Roombi Eureka Naming Server</description>
 	<properties>
 		<java.version>11</java.version>
 		<spring-cloud.version>2021.0.5</spring-cloud.version>

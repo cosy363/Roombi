@@ -20,7 +20,8 @@ spring:
     username: guest
     password: guest
   config:
-    import: "optional:configserver:http://localhost:8888"
+    import: "optional:configserver:http://config-service:8888"
+
   cloud:
     name: gateway
     config:
@@ -75,6 +76,15 @@ spring:
           filters:
             - RemoveRequestHeader=Cookie
             - RewritePath=/flask-service/(?<segment>.*), /$\{segment}
+#            - AuthorizationHeaderFilter
+        - id: heart-service
+          uri: lb://HEART-SERVICE
+          predicates:
+            - Path=/heart-service/**
+            - Method=GET, POST
+          filters:
+            - RemoveRequestHeader=Cookie
+            - RewritePath=/heart-service/(?<segment>.*), /$\{segment}
             - AuthorizationHeaderFilter
 
 management:
@@ -82,8 +92,3 @@ management:
     web:
       exposure:
         include: refresh, beans, health, httptrace, busrefresh, info, metrics, prometheus
-
-#Config server property
-#token:
-#  expiration_time: 8640000
-#  secret: user_token

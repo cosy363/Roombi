@@ -1,6 +1,5 @@
 package roombi.server.user_service.service;
 
-import org.apache.catalina.Store;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +20,15 @@ import java.util.UUID;
 @Service
 public class UserServiceImpl implements UserService {
     UserRepository userRepository;
+//    HeartlistRepository heartlistRepository;
     BCryptPasswordEncoder passwordEncoder;
+
+    @Autowired
+    public UserServiceImpl(UserRepository userRepository, BCryptPasswordEncoder passwordEncoder) {
+        this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
+//        this.heartlistRepository = heartlistRepository;
+    }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -32,12 +39,6 @@ public class UserServiceImpl implements UserService {
         }
         return new User(userEntity.getUserId(), userEntity.getEncryptedPwd(),
                 true, true, true, true, new ArrayList<>());
-    }
-
-    @Autowired
-    public UserServiceImpl(UserRepository userRepository, BCryptPasswordEncoder passwordEncoder) {
-        this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -88,4 +89,5 @@ public class UserServiceImpl implements UserService {
         return userDto;
 
     }
+
 }

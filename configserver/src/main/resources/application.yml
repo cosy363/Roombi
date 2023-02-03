@@ -16,7 +16,7 @@ spring:
         git:
           uri: https://github.com/cosy363/config-server
           username: cosy363
-          password: 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
+          password: '{cipher}AQC80H1fq2mkA57tporO1ClP/zz99HQ4HE5w91Z87gmjbkRJcew9Cotr1ICdMu0UwmP8vUKUsYHosPnYiYapE9PSfAIB7aHyYPvZLIN2qW4y9v1NJqdjS+JClTW3zBru1/WNgusiaX4b32tG7N3HK4DkYX1CvqN4Q1Mk/yPfgl4rUIUFVlg4CDx6q7x0a9LW6WCoIhVKuCcJvkidjeQg/hIhdW+DRjAWi8UFBpSFT/eT7c77W5d0M1ms8+l2V+3aZDSWaKbSOxMlAxq2V3Hv1lN+UuOnde2se7OF2ugRC38pKJGU4nCNBUDCs7Jr6amK+imo5I37ZnylLz1DCxQVR7Oy/RyKabLbH3v0xkFcnI3cjBQfjQB5ZJGueIMcWmkBKY7GwWjajp/1swj+MY4LxC9NXSfoFmT2H+ZMogdbkVp73w=='
 
 management:
   endpoints:

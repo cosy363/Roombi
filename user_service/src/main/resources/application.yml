@@ -9,19 +9,14 @@ spring:
     port: 5672
     username: guest
     password: guest
-#  datasource:
-#      driver-class-name: com.mysql.cj.jdbc.Driver
-#      url: jdbc:mysql://localhost:3306/furniture_DB?serverTimezone=Asia/Seoul
-#      username: root
-#      password: kimjin12!
+
   cloud:
     config:
       import-check:
         enabled: false
       name: userservice
   config:
-    import: "optional:configserver:http://localhost:8888"
-
+    import: "optional:configserver:http://config-service:8888"
 
 eureka:
   instance:
@@ -47,6 +42,3 @@ management:
       exposure:
         include: refresh, beans, health, busrefresh, info, metrics, prometheus
 
-#
-#gateway:
-#  ip: 172.30.89.39
