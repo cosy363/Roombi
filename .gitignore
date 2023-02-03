@@ -1,1 +1,3 @@
-configserver/
+.DS_Store
+configserver/src/main/resources/bootstrap.yml
+configserver/apiEncryptionKey.jks
