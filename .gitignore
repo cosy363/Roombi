@@ -3,3 +3,4 @@ configserver/src/main/resources/bootstrap.yml
 configserver/apiEncryptionKey.jks
 Flask/.DS_Store
 .DS_Store
+config.py
