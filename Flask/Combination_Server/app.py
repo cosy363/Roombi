@@ -10,10 +10,11 @@ import config
 
 port = 5000
 # Register Eureka
-eureka_client.init(eureka_server="http://naming-service:8761/eureka",
-                    app_name="flask-service", 
-                    instance_port=port,
-                    )
+# eureka_client.init(
+#                     eureka_server="http://naming-service:8761/eureka",
+#                     app_name="flask-service", 
+#                     instance_port=port,
+#                     )
 
 # Instance 
 app = Flask(__name__)

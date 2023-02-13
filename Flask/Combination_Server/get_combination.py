@@ -4,13 +4,13 @@ from flask_jwt_extended import *
 
 # flask_restx 관련 class import 
 from flask_restx import Resource, Namespace
-from recommendation import single_comb, return_list
-from get_combination_impl import add_price_sum, return_id_list, budget_cut_list, return_as_dict
+from recommendation import return_list, linear_regression
+from get_combination_impl import return_id_list, budget_cut_list, return_as_dict
 # from prometheus_client import generate_latest, REGISTRY, Counter, Gauge, Histogram
+from config import Config
 
 
 #Setting
-number_of_return_list = 20
 # REQUESTS = Counter('http_requests_total', 'Total HTTP Requests (count)', ['method', 'endpoint', 'status_code'])
 # 
 # IN_PROGRESS = Gauge('http_requests_inprogress', 'Number of in progress HTTP requests')
@@ -44,7 +44,10 @@ class GetCombinationPost(Resource):
                 user_preference['user_color'][i] -= 1   
 
             # Return Combination Result
-            final_list = return_list(user_preference)   
+            final_list = return_list(user_preference)
+
+            # Return Linear Regression Measurement
+            final_list = linear_regression(final_list)   
 
             # Change the result into Furniture ID list 
             final_id_list = return_id_list(final_list,user_id)  
@@ -57,9 +60,6 @@ class GetCombinationPost(Resource):
 
             #Return result as JSON format
             if final_id_list_with_budget:
-                # return make_response(json.dumps( { "status":200, "result" : final_id_list_with_budget[0:number_of_return_list] } ) ,200)
-                return final_id_list_with_budget[0:number_of_return_list+1], 200 
-                # return jsonify(final_id_list_with_budget), 200
+                return final_id_list_with_budget[0:Config.NUMBER_OF_RETURN_LIST+1], 200 
             else:    
-                # return make_response("There is No Combination within Budget",204)
                 return None, 204

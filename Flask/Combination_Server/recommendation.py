@@ -1,11 +1,31 @@
 from operator import itemgetter
-import numpy as np
 import pymysql
 import random
-from get_combination_impl import add_price_sum
-from config import Config 
+from config import Config
+from sklearn.linear_model import LogisticRegression
+import joblib
+import pandas as pd
+import matplotlib.pyplot as plt
+from sklearn import datasets
+import pickle
+
+
+# Color Grading Table
 color_table = [[85,	65,	65,	55,55,	55],[65, 85,65,	65,	75,	75],[65,65,	85,	75,	65,	65],[55,75,	55,	95,	95,	65],[55,55,	75,	95,	95,	65],[65,65,	65,	75,	75,	95]]
 
+def add_price_sum(final_list):
+    for i,a in enumerate(final_list):
+        for j,b in enumerate(final_list[i]):
+            for k,c in enumerate(final_list[i][j]):
+                for l,d in enumerate(final_list[i][j][k]):
+                    sum = 0.
+                    price_sum = 0
+                    for m,e in enumerate(final_list[i][j][k][l]):
+                        sum += final_list[i][j][k][l][m]['single score']
+                        price_sum += final_list[i][j][k][l][m]['Price']
+                    final_list[i][j][k][l].append(sum)
+                    final_list[i][j][k][l].append(price_sum)
+    return final_list
 
 def single_comb(preference,stage,comb_list=[]):
     prime_sort_order = [0,2,4,6,1,5,3,9,7,8]
@@ -236,6 +256,7 @@ def single_rec(furn,preference,stage,prime={},second={},third={},):
     return score
 
 def return_list(user_preference):
+
     prime_list,second_list,third_list,final_list = [],[],[],[]
 
     # prime furniture single combination alg.
@@ -255,3 +276,29 @@ def return_list(user_preference):
     final_list = add_price_sum(single_comb(user_preference,4,third_list))
 
     return final_list
+
+def linear_regression(id_list):
+
+    model = joblib.load('model.joblib') 
+
+    for i,a in enumerate(id_list):
+        for j,b in enumerate(id_list[i]):
+            for k,c in enumerate(id_list[i][j]):
+                for l,d in enumerate(id_list[i][j][k]):
+                    pri = id_list[i][j][k][l][0]
+                    sec = id_list[i][j][k][l][1]
+                    thr = id_list[i][j][k][l][2]
+                    fin = id_list[i][j][k][l][3]
+                    combination_color = int('{}{}{}{}'.format(pri['Color_Num'],sec['Color_Num'],thr['Color_Num'],fin['Color_Num']))
+                    combination_category = int('{}{}{}{}'.format(pri['Category_Num'],sec['Category_Num'],thr['Category_Num'],fin['Category_Num']))
+                    predict = model.predict_proba([[combination_category,combination_color]])
+                    score = float(float(predict[0][0]) + float(predict[0][1])*2 + float(predict[0][2])*3 + float(predict[0][3])*4)
+                    
+                    score_sum = score + id_list[i][j][k][l][4] -2
+                    id_list[i][j][k][l].append(score)
+                    id_list[i][j][k][l].append(score_sum)
+    return id_list
+
+
+
+

@@ -15,3 +15,11 @@ PyMySQL==1.0.2
 PyJWT==2.6.0
 matplotlib==3.6.3
 requests==2.28.1
+#MongoDB
+pymongo==4.3.3
+nspython==2.3.0
+#Scikit
+joblib==1.2.0
+scikit-learn==1.2.1
+scipy==1.10.0
+threadpoolctl==3.1.0
