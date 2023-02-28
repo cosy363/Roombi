@@ -1,9 +1,6 @@
 from sklearn.linear_model import LogisticRegression
 import joblib
 import pandas as pd
-import matplotlib.pyplot as plt
-from sklearn import datasets
-import pickle
 
 print("yeah")
 data = pd.read_csv('data.csv', names=['Score', 'Category', 'Color'])

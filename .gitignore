@@ -4,3 +4,7 @@ configserver/apiEncryptionKey.jks
 Flask/.DS_Store
 .DS_Store
 config.py
+Flask/Combination_Server/redis.conf
+Flask/Combination_Server/imshow.py
+Flask/Combination_Server/imshow.py
+Flask/Combination_Server/fit.py

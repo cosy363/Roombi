@@ -9,7 +9,6 @@ spring:
       uri: http://127.0.0.1:8888
       name: config
 
-
 eureka:
   client:
     register-with-eureka: false

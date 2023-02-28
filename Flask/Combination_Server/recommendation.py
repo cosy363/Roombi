@@ -2,13 +2,8 @@ from operator import itemgetter
 import pymysql
 import random
 from config import Config
-from sklearn.linear_model import LogisticRegression
 import joblib
-import pandas as pd
-import matplotlib.pyplot as plt
-from sklearn import datasets
-import pickle
-
+import time
 
 # Color Grading Table
 color_table = [[85,	65,	65,	55,55,	55],[65, 85,65,	65,	75,	75],[65,65,	85,	75,	65,	65],[55,75,	55,	95,	95,	65],[55,55,	75,	95,	95,	65],[65,65,	65,	75,	75,	95]]
@@ -32,14 +27,18 @@ def single_comb(preference,stage,comb_list=[]):
     second_sort_order = [0,1,4,3,2,5,7,6]
     third_sort_order = [1,3,0,2,4]
     final_sort_order = [0,1]
-
+    
     # import prime가구 category dB from mysql
     conn, cur = None, None
     conn = pymysql.connect(host=Config.MYSQL_IP,user=Config.MYSQL_USER,password=Config.MYSQL_PASSWORD,db='furniture_DB',charset='utf8')
     cur = conn.cursor(pymysql.cursors.DictCursor)
+
+    start = time.time()
     cur.execute("SELECT Rating, Reviews, Category_Num, Color_2, Color_Num, New_ID, Image_URL, Price FROM furniture_DB.furniture_list  WHERE Category_Num = {}".format(str(preference['furniture_combination'][stage-1])))
     mysql_list = cur.fetchall()
     
+    print("수행시간 = ",time.time()-start,"초")
+
     # Create empty list
     return_list, return_list2, return_list3 = [],[],[]
     furn_list = []

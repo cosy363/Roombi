@@ -1,7 +1,3 @@
-from operator import itemgetter
-import numpy as np
-import pymysql
-import random
 from config import Config
 from pymongo import MongoClient
 
@@ -13,16 +9,21 @@ def return_id_list(final_list_with_sum, user_id):
         for j,b in enumerate(final_list_with_sum[i]):
             for k,c in enumerate(final_list_with_sum[i][j]):
                 for l,d in enumerate(final_list_with_sum[i][j][k]):
-                    pri = final_list_with_sum[i][j][k][l][0]['New_ID']
-                    sec = final_list_with_sum[i][j][k][l][1]['New_ID']
-                    thr = final_list_with_sum[i][j][k][l][2]['New_ID']
-                    fin = final_list_with_sum[i][j][k][l][3]['New_ID']
+                    # pri = final_list_with_sum[i][j][k][l][0]['New_ID']
+                    # sec = final_list_with_sum[i][j][k][l][1]['New_ID']
+                    # thr = final_list_with_sum[i][j][k][l][2]['New_ID']
+                    # fin = final_list_with_sum[i][j][k][l][3]['New_ID']
+                    pri = final_list_with_sum[i][j][k][l][0]
+                    sec = final_list_with_sum[i][j][k][l][1]
+                    thr = final_list_with_sum[i][j][k][l][2]
+                    fin = final_list_with_sum[i][j][k][l][3]
                     score_sum = final_list_with_sum[i][j][k][l][4]
                     price_sum = final_list_with_sum[i][j][k][l][5]
                     deep_score = final_list_with_sum[i][j][k][l][6]
                     total_score = final_list_with_sum[i][j][k][l][7]
 
-                    list = [int(pri),int(sec),int(thr),int(fin),float(score_sum),int(price_sum),str(user_id),float(deep_score),float(total_score)]
+                    # list = [int(pri),int(sec),int(thr),int(fin),float(score_sum),int(price_sum),str(user_id),float(deep_score),float(total_score)]
+                    list = [pri,sec,thr,fin,float(score_sum),int(price_sum),str(user_id),float(deep_score),float(total_score)]
 
                     id_list.append(list)
 

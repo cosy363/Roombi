@@ -20,7 +20,9 @@ spring:
     username: guest
     password: guest
   config:
-    import: "optional:configserver:http://config-service:8888"
+#    import: "optional:configserver:http://config-service:8888"
+    import: "optional:configserver:http://localhost:8888"
+
 
   cloud:
     name: gateway
@@ -59,7 +61,7 @@ spring:
           filters:
             - RemoveRequestHeader=Cookie
             - RewritePath=/user-service/(?<segment>.*), /$\{segment}
-            - AuthorizationHeaderFilter
+#            - AuthorizationHeaderFilter
         - id: user-service
           uri: lb://USER-SERVICE
           predicates:
@@ -85,7 +87,7 @@ spring:
           filters:
             - RemoveRequestHeader=Cookie
             - RewritePath=/heart-service/(?<segment>.*), /$\{segment}
-            - AuthorizationHeaderFilter
+#            - AuthorizationHeaderFilter
 
 management:
   endpoints:

@@ -1,0 +1,24 @@
+version: "3.9"
+services:
+  web:
+    build: .
+    ports:
+      - "8000:5000"
+    volumes:
+      - .:/code
+    environment:
+      FLASK_DEBUG: "true"
+
+  redis:
+    image: "redis:alpine"
+
+  gateway-service:
+    image: "redis:alpine"
+
+
+  naming-service:
+    image: "redis:alpine"
+
+  config-service:
+    image: "redis:alpine"    
+    

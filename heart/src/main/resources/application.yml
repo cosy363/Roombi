@@ -15,7 +15,8 @@ spring:
         enabled: false
       name: heartservice
   config:
-    import: "optional:configserver:http://config-service:8888"
+    #    import: "optional:configserver:http://config-service:8888"
+    import: "optional:configserver:http://localhost:8888"
 
 eureka:
   instance:

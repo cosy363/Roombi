@@ -1,6 +1,4 @@
-from nturl2path import url2pathname
 import cv2
-from matplotlib import pyplot as plt
 import requests
 import numpy as np
 
