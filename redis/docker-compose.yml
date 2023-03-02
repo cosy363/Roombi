@@ -1,0 +1,90 @@
+version: "3"
+
+services:
+  predixy:
+    platform: linux/arm64/v8
+    image: hanndol/predixy
+    build:
+      context: predixy/
+    container_name: predixy
+    hostname: predixy
+    volumes:
+      - ./predixy/conf:/etc/predixy/conf
+    ports:
+      - "7617:7617"
+      - "17617:17617"
+
+  masternode1:
+    platform: linux/arm64/v8
+    image: redis:7.0.8-alpine3.17
+    container_name: masternode1
+    volumes:
+      - ./7501.conf:/usr/local/etc/7501.conf
+      - ./start.sh:/start.sh
+    command: redis-server /usr/local/etc/7501.conf
+    ports:
+      - "7501:7501"
+      - "17501:17501"
+
+  masternode2:
+    platform: linux/arm64/v8
+    image: redis:7.0.8-alpine3.17
+    container_name: masternode2
+    volumes:
+      - ./7502.conf:/usr/local/etc/7502.conf
+    command: redis-server /usr/local/etc/7502.conf
+    ports:
+      - "7502:7502"
+      - "17502:17502"
+
+  masternode3:
+    platform: linux/arm64/v8
+    image: redis:7.0.8-alpine3.17
+    container_name: masternode3
+    volumes:
+      - ./7503.conf:/usr/local/etc/7503.conf
+    command: redis-server /usr/local/etc/7503.conf
+    ports:
+      - "7503:7503"
+      - "17503:17503"
+
+  slavenode1:
+    platform: linux/arm64/v8
+    image: redis:7.0.8-alpine3.17
+    container_name: slavenode1
+    volumes:
+      - ./7601.conf:/usr/local/etc/7601.conf
+    command: redis-server /usr/local/etc/7601.conf
+    ports:
+      - "7601:7601"
+      - "17601:17601"
+
+  slavenode2:
+    platform: linux/arm64/v8
+    image: redis:7.0.8-alpine3.17
+    container_name: slavenode2
+    volumes:
+      - ./7602.conf:/usr/local/etc/7602.conf
+    command: redis-server /usr/local/etc/7602.conf
+    ports:
+      - "7602:7602"
+      - "17602:17602"
+
+  slavenode3:
+    platform: linux/arm64/v8
+    image: redis:7.0.8-alpine3.17
+    container_name: slavenode3
+    volumes:
+      - ./7603.conf:/usr/local/etc/7603.conf
+    command: redis-server /usr/local/etc/7603.conf
+    ports:
+      - "7603:7603"
+      - "17603:17603"
+
+  flask-service:
+    platform: linux/arm64/v8
+    image: cosy363/combination-service
+
+networks: 
+  redis: 
+    driver: bridge

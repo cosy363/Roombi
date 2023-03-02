@@ -1,0 +1,41 @@
+version: '3'
+services:
+  mysql-master:
+    image: mysql:latest
+    user: root
+    build:
+      context: ./master
+      dockerfile: Dockerfile
+    stdin_open: true
+    tty: true
+    ports:
+      - 13306:3306
+    networks:
+      mysql-network:
+        ipv4_address: 172.16.0.10
+    container_name: mysql-master
+    restart: always
+
+  mysql-slave:
+    image: mysql:latest
+    build:
+      context: ./slave
+      dockerfile: Dockerfile
+    user: root
+    stdin_open: true
+    tty: true
+    ports:
+      - 13307:3306
+    networks:
+      mysql-network:
+        ipv4_address: 172.16.0.11
+    depends_on:
+      - mysql-master
+    container_name: mysql-slave
+
+networks:
+  mysql-network:
+    driver: bridge
+    ipam:
+     config:
+       - subnet: 172.16.0.0/16
