@@ -1,6 +1,31 @@
 from config import Config
 from pymongo import MongoClient
+from celery import Celery
+import time
 
+celery = Celery('mongo',broker=Config.CELERY_BROKER_URL)
+
+@celery.task(bind=True,ignore_result=True)
+def MongoDB_query(self,id_list):
+    client = MongoClient('mongodb://root:{}@{}'.format(Config.MONGODB_USER,Config.MONGODB_IP))
+    db = client.roombi_combination
+    collection = db.combination_log
+    
+    # Insert ID_list to Combination Log
+    collection.insert_many(return_as_dict(id_list))
+    client.close()
+
+def send_to_mongo(id_list):
+    MongoDB_query.delay(id_list)
+
+def send_to_mongo_nocelery(id_list):
+    client = MongoClient('mongodb://root:kimjin12!@localhost:27017/')
+    db = client.roombi_combination
+    collection = db.combination_log
+    
+    # Insert ID_list to Combination Log
+    collection.insert_many(return_as_dict(id_list))
+    client.close()
 
 def return_id_list(final_list_with_sum, user_id):
     id_list = []
@@ -41,13 +66,16 @@ def return_id_list(final_list_with_sum, user_id):
     #         conn2.commit()
 
     ## MongoDB Connection 
-    client = MongoClient('mongodb://{}:{}@localhost:27017/'.format(Config.MONGODB_USER,Config.MONGODB_PASSWORD))
-    db = client.roombi_combination
-    collection = db.combination_log
+
+    # send_to_mongo(id_list)
+
+    # client = MongoClient('mongodb://{}:{}@localhost:27017/'.format(Config.MONGODB_USER,Config.MONGODB_PASSWORD))
+    # db = client.roombi_combination
+    # collection = db.combination_log
     
-    # Insert ID_list to Combination Log
-    collection.insert_many(return_as_dict(id_list))
-    client.close()
+    # # Insert ID_list to Combination Log
+    # collection.insert_many(return_as_dict(id_list))
+    # client.close()
 
     return sorted(id_list, key = lambda x: x[7], reverse=True)
 

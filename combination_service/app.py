@@ -8,13 +8,15 @@ from config import Config
 from bson.objectid import ObjectId
 from bson.json_util import dumps
 from recommendation import return_list, linear_regression
-from get_combination_impl import return_id_list, budget_cut_list, return_as_dict
+from get_combination_impl import return_id_list, budget_cut_list, return_as_dict, send_to_mongo, send_to_mongo_nocelery
 
 #Prometheus
 from prometheus_client import REGISTRY, Counter, Gauge, Histogram, generate_latest
 from prometheus_flask_exporter import PrometheusMetrics, RESTfulPrometheusMetrics
 
+#Caching
 from flask_caching import Cache
+
 
 # Register Eureka
 eureka_client.init(
@@ -48,7 +50,7 @@ def create_app():
 
     cache.init_app(app1)
     jwt = JWTManager(app1)
-
+    
     # API Server Setting
     api_server = Api(
         app1,
@@ -128,7 +130,10 @@ class GetCombinationPost(Resource):
             final_list = linear_regression(final_list)   
 
             # Change the result into Furniture ID list 
-            final_id_list = return_id_list(final_list,user_id)  
+            final_id_list = return_id_list(final_list,user_id) 
+
+            # Celery unsynchronized MongoDB query
+            send_to_mongo(final_id_list)
 
             # Budget Cut of Combinations
             final_id_list_with_budget = budget_cut_list(final_id_list,budget)   
@@ -150,14 +155,69 @@ class GetCombinationPost(Resource):
                 COMBINATION_GENERATION.labels(combination_no='not created').inc()
 
                 return None, 204
-    
+
+@GetCombination.route('/getcombination_no_celery')
+class GetCombinationPostNoCelery(Resource):
+
+    @TIMINGS.time()
+    @IN_PROGRESS.track_inprogress()
+    # @COMBINATION_GENERATION
+    def post(self):
+        # jwt_validity = get_jwt_identity()
+        jwt_validity = 1
+        if jwt_validity is None:
+            return "User Only!"
+        else:
+            """Input: json{user_id, furniture_combination, user_color, money(budget)}"""
+            user_preference = {}
+            user_preference['furniture_combination'] = request.json.get('furniture preference')
+            user_preference['user_color'] = request.json.get('color preference')
+            budget = request.json.get('money')
+            user_id = request.json.get('user_id')   
+
+            for i,k in enumerate(user_preference['user_color']):
+                user_preference['user_color'][i] -= 1   
+
+            # Return Combination Result
+            final_list = return_list(user_preference)
+
+            # Return Linear Regression Measurement
+            final_list = linear_regression(final_list)   
+
+            # Change the result into Furniture ID list 
+            final_id_list = return_id_list(final_list,user_id) 
+
+            # Celery unsynchronized MongoDB query
+            send_to_mongo_nocelery(final_id_list)
+
+            # Budget Cut of Combinations
+            final_id_list_with_budget = budget_cut_list(final_id_list,budget)   
+
+            #Return result as JSON format
+            if final_id_list_with_budget:
+                # Convert List to Dictionary(JSON type)                
+                final_id_list_with_budget = return_as_dict(final_id_list_with_budget) 
+
+                #Prometheus Metrics
+                REQUESTS.labels(method='POST', endpoint="/getcombination", status_code=200).inc()
+                COMBINATION_GENERATION.labels(combination_no='created').inc()
+
+                return final_id_list_with_budget[0:Config.NUMBER_OF_RETURN_LIST+1], 200 
+                
+            else:    
+                #Prometheus Metrics
+                REQUESTS.labels(method='POST', endpoint="/getcombination", status_code=204).inc()
+                COMBINATION_GENERATION.labels(combination_no='not created').inc()
+
+                return None, 204
+
+
 @GetCombination.route('/getcombination_cached')
 class GetCombinationPostCached(Resource):
     
     @TIMINGS.time()
     @IN_PROGRESS.track_inprogress()
     def post(self):
-
 
         # jwt_validity = get_jwt_identity()
         jwt_validity = 1
@@ -193,6 +253,8 @@ class GetCombinationPostCached(Resource):
                 # Change the result into Furniture ID list 
                 final_id_list = return_id_list(final_list,user_id)
 
+                send_to_mongo(final_id_list)
+
                 # Save Algorithm Result to Redis Cache
                 cache.set(redis_key,final_id_list)  
                 
@@ -221,6 +283,7 @@ class GetCombinationPostCached(Resource):
                 COMBINATION_GENERATION.labels(combination_no='not created').inc()
 
                 return None, 204
+
 
 if __name__ == "__main__":
     app1 = create_app()

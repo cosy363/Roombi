@@ -1,0 +1,57 @@
+version: "3"
+services:
+  master:
+    image: mysql:5.7
+    platform: linux/amd64
+    container_name: mysql-master
+    ports:
+      - "3307:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+    volumes:
+      - /Users/brannynew/Documents/Roombination/Roombination/mysql/db/master
+
+  slave:
+    image: mysql:5.7
+    platform: linux/amd64
+    container_name: mysql-slave
+    ports:
+      - "3308:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+    volumes:
+      - /Users/brannynew/Documents/Roombination/Roombination/mysql/db/slave1
+
+  slave2:
+    image: mysql:5.7
+    platform: linux/amd64
+    container_name: mysql-slave-2
+    ports:
+      - "3309:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+    volumes:
+      - /Users/brannynew/Documents/Roombination/Roombination/mysql/db/slave2
+
+  slave3:
+    image: mysql:5.7
+    platform: linux/amd64
+    container_name: mysql-slave-3
+    ports:
+      - "3310:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+    volumes:
+      - /Users/brannynew/Documents/Roombination/Roombination/mysql/db/slave3

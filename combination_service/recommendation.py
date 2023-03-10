@@ -30,7 +30,7 @@ def single_comb(preference,stage,comb_list=[]):
     
     # import prime가구 category dB from mysql
     conn, cur = None, None
-    conn = pymysql.connect(host=Config.MYSQL_IP,user=Config.MYSQL_USER,password=Config.MYSQL_PASSWORD,db='furniture_DB',charset='utf8')
+    conn = pymysql.connect(host=Config.MYSQL_IP,user=Config.MYSQL_USER,password=Config.MYSQL_PASSWORD,db='furniture_DB',charset='utf8',port=Config.MYSQL_PORT)
     cur = conn.cursor(pymysql.cursors.DictCursor)
 
     start = time.time()
@@ -279,6 +279,9 @@ def return_list(user_preference):
 def linear_regression(id_list):
 
     model = joblib.load('model.joblib') 
+
+    predict = model.predict_proba([[combination_category,combination_color]])
+
 
     for i,a in enumerate(id_list):
         for j,b in enumerate(id_list[i]):
