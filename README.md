@@ -1,8 +1,9 @@
 # Roombi
-Spring+FASTAPI based Furniture Combination Generator
+Furniture Combination Generator Application
 
   <br>
   <img src="./images/Roombi.png" style="width:300px;height:300px;>
   <br>
 
-[Notion](bit.ly/roombi).
+
+For more info: [Notion](https://bit.ly/roombi)
