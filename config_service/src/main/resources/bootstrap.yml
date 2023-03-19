@@ -1,0 +1,6 @@
+encrypt:
+  key-store:
+    location: file://${user.home}/Documents/Roombination/Roombination/keystore/apiEncryptionKey.jks
+#    location: file:/apiEncryptionKey.jks
+    password: kimtiger12
+    alias: apiEncryptionKey
